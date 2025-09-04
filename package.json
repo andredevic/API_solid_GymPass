@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "tsx watch src/server.ts",
-    "start": "node build/server.js",
-    "build": "tsup src --out-dir build",
+    "start": "node dist/server.js",
+    "build": "tsup src --out-dir dist",
     "test": "vitest run --project unit",
     "test:e2e": "vitest run --project e2e",
     "test:watch": "vitest  --project unit",
     "test:e2e:watch": "vitest  --project e2e",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "seed": "tsx prisma/seed/index.ts"
+    "seed": "node dist/seed/index.js",
+    "docker:dev": "docker compose up --build",
+    "docker:down": "docker compose down -v"
   },
   "keywords": [],
   "author": "",
