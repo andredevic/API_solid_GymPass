@@ -1,12 +1,4 @@
 {
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/__tests__/**"
-  ],
-  "include": [
-    "seed/**/*.ts"
-  ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
     /* Projects */

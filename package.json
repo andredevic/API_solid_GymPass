@@ -13,7 +13,7 @@
     "test:e2e:watch": "vitest  --project e2e",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "seed": "node dist/seed/index.js",
+    "seed": "node dist/repositories/seed/index.js",
     "docker:dev": "docker compose up --build",
     "docker:down": "docker compose down -v"
   },

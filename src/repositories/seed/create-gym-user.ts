@@ -20,6 +20,12 @@ const userAdmin = {
 }
 
 export default async function createGymAndAdmin() {
+  const existAdmin = await prisma.user.findUnique({
+    where: { email: userAdmin.email },
+  })
+  if (existAdmin) {
+    return
+  }
   // 1. Criar usuário admin
   const registerUseCase = makeRegisterUseCase()
   await registerUseCase.execute(userAdmin)

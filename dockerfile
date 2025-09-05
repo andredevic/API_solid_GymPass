@@ -33,8 +33,7 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/node_modules/.prisma /app/node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma /app/node_modules/@prisma
 COPY --from=builder /app/dist ./dist/      
-COPY --from=builder /app/prisma ./prisma/  
-COPY --from=builder /app/seed ./seed/      
+COPY --from=builder /app/prisma ./prisma/    
 
 # Expõe a porta da API
 EXPOSE 3333
