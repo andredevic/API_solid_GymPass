@@ -135,11 +135,15 @@ Follow the steps below to get the project running locally.
 
 ## 🧪 Testing the API (with Insomnia/Postman)
 
-With the application running, you can now test the routes.
+When you start the application with `npm run docker:dev`, an **Administrator** user is automatically created by the seed script to make it easier to test protected routes.
 
-### Step 1: Create a User and Authenticate
+The following guide demonstrates the two main user flows: first, by creating and using a regular **Member** account, and then by using the pre-seeded **Admin** account to test administrative functions.
 
-1.  **Create a new user (MEMBER):**
+### Step 1: Testing as a `MEMBER` (Regular User)
+
+First, let's simulate the flow of a standard user.
+
+1.  **Create a new user:**
     - `POST` `http://localhost:3333/users`
     - Body (JSON):
       ```json
@@ -150,7 +154,7 @@ With the application running, you can now test the routes.
       }
       ```
 
-2.  **Authenticate:**
+2.  **Authenticate as the new user:**
     - `POST` `http://localhost:3333/sessions`
     - Body (JSON):
       ```json
@@ -159,28 +163,17 @@ With the application running, you can now test the routes.
         "password": "password123"
       }
       ```
-    - **Save the `token`** returned in the response. You will also receive a `refreshToken` in the response cookies.
+    - **Save the `token`** from the response. This is your `MEMBER` token.
 
-### Step 2: Accessing Protected Routes
-
-For any other route that requires authentication, you must send the token in the request header.
-
-- **Header:** `Authorization`
-- **Value:** `Bearer <PASTE_YOUR_TOKEN_HERE>`
-
-1.  **Example: View your profile:**
+3.  **Access a protected route:**
     - `GET` `http://localhost:3333/me`
-    - Add the `Authorization` Header as described above.
-    - You will receive your profile data in the response.
+    - Add the `MEMBER` token to the `Authorization: Bearer <TOKEN>` header. You should see your profile data.
 
-### Step 3: Accessing Admin Routes
+### Step 2: Testing as an `ADMIN`
 
-The `seed` script that runs with `docker:dev` already creates an **ADMIN** user.
+Now, let's use the pre-seeded administrator account to test admin-only features.
 
-- **Email:** `andre@andre.com`
-- **Password:** `123456`
-
-1.  **Authenticate as an Admin:**
+1.  **Authenticate as the Admin:**
     - `POST` `http://localhost:3333/sessions`
     - Body (JSON):
       ```json
@@ -189,11 +182,11 @@ The `seed` script that runs with `docker:dev` already creates an **ADMIN** user.
         "password": "123456"
       }
       ```
-    - Save the new admin `token`.
+    - **Save this new `token`**. This is your `ADMIN` token.
 
-2.  **Example: Register a new gym (Admin Route):**
+2.  **Access an Admin-only route (e.g., creating a gym):**
     - `POST` `http://localhost:3333/gyms`
-    - Add the **Admin token** to the `Authorization` Header.
+    - Add the **`ADMIN` token** to the `Authorization: Bearer <TOKEN>` header.
     - Body (JSON):
       ```json
       {
@@ -204,11 +197,11 @@ The `seed` script that runs with `docker:dev` already creates an **ADMIN** user.
         "longitude": -46.656507
       }
       ```
-    - The gym will be created successfully. If you try this with a `MEMBER` user's token, you will receive an unauthorized error.
+    - The gym will be created successfully. If you try this same request with the `MEMBER` token from Step 1, you will correctly receive an "Unauthorized" error, demonstrating that the RBAC is working.
 
-### Step 4: Refreshing the Access Token
+### Step 3: Refreshing the Access Token
 
-When your main token expires, use the refresh route. Insomnia/Postman handles cookies automatically, so you just need to make the request.
+When your token expires, use the refresh route. Insomnia/Postman handles cookies automatically.
 
 - `PATCH` `http://localhost:3333/token/refresh`
 - This request does not need a body or an `Authorization` header.
