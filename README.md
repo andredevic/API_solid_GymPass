@@ -1,7 +1,7 @@
 # Solid GymPass API
 
 [![Run E2E Tests](https://github.com/andredevic/API_solid_GymPass/actions/workflows/e2e.tests.yml/badge.svg)](https://github.com/andredevic/API_solid_GymPass/actions/workflows/e2e.tests.yml)
-![Unit Tests](https://img.shields.io/github/actions/workflow/status/andredevic/API_solid_GymPass/unit-tests.yml?branch=master&logo=github&label=Unit%20Tests)
+[![Run Unit Tests](https://github.com/andredevic/API_solid_GymPass/actions/workflows/run-unit-tests.yml/badge.svg)](https://github.com/andredevic/API_solid_GymPass/actions/workflows/run-unit-tests.yml)
 ![Language](https://img.shields.io/github/languages/top/andredevic/API_solid_GymPass)
 ![License](https://img.shields.io/github/license/andredevic/API_solid_GymPass)
 
