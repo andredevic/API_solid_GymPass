@@ -3,7 +3,7 @@
 [![Run E2E Tests](https://github.com/andredevic/API_solid_GymPass/actions/workflows/e2e.tests.yml/badge.svg)](https://github.com/andredevic/API_solid_GymPass/actions/workflows/e2e.tests.yml)
 [![Run Unit Tests](https://github.com/andredevic/API_solid_GymPass/actions/workflows/run-unit-tests.yml/badge.svg)](https://github.com/andredevic/API_solid_GymPass/actions/workflows/run-unit-tests.yml)
 ![Language](https://img.shields.io/github/languages/top/andredevic/API_solid_GymPass)
-![License](https://img.shields.io/github/license/andredevic/API_solid_GymPass)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > **Project Status:** In Development 🚧
 
