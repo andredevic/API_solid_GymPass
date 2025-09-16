@@ -1,4 +1,3 @@
-# .github/workflows/e2e-tests.yml
 name: Run E2E Tests
 
 on:
