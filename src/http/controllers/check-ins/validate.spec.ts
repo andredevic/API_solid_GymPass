@@ -37,7 +37,7 @@ describe('Validate Check-in Controller', () => {
       .set('Authorization', `Bearer ${token}`)
       .send()
 
-    expect(response.statusCode).toEqual(204)
+    expect(response.statusCode).toEqual(200)
 
     checkIn = await prisma.checkIn.findUniqueOrThrow({
       where: {

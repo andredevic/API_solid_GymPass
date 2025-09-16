@@ -21,12 +21,12 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const checkInUseCase = makeCheckInUseCase()
 
-  await checkInUseCase.execute({
+  const { checkIn } = await checkInUseCase.execute({
     gymId,
     userId: request.user.sub, // Assuming the user ID is stored in the request object after JWT verification
     userLatitude: latitude,
     userLongitude: longitude,
   })
 
-  return reply.status(201).send()
+  return reply.status(201).send({ checkIn })
 }
