@@ -137,7 +137,7 @@ Follow the steps below to get the project running locally.
 
 When you start the application with `npm run docker:dev`, an **Administrator** user is automatically created by the seed script to make it easier to test protected routes.
 
-The following guide demonstrates the two main user flows: first, by creating and using a regular **Member** account, and then by using the pre-seeded **Admin** account to test administrative functions.
+The following guide demonstrates the key user flows: creating a standard **Member** account, using the pre-seeded **Admin** account, and performing the complete check-in process.
 
 ### Step 1: Testing as a `MEMBER` (Regular User)
 
@@ -165,10 +165,6 @@ First, let's simulate the flow of a standard user.
       ```
     - **Save the `token`** from the response. This is your `MEMBER` token.
 
-3.  **Access a protected route:**
-    - `GET` `http://localhost:3333/me`
-    - Add the `MEMBER` token to the `Authorization: Bearer <TOKEN>` header. You should see your profile data.
-
 ### Step 2: Testing as an `ADMIN`
 
 Now, let's use the pre-seeded administrator account to test admin-only features.
@@ -184,7 +180,7 @@ Now, let's use the pre-seeded administrator account to test admin-only features.
       ```
     - **Save this new `token`**. This is your `ADMIN` token.
 
-2.  **Access an Admin-only route (e.g., creating a gym):**
+2.  **Access an Admin-only route (creating a gym):**
     - `POST` `http://localhost:3333/gyms`
     - Add the **`ADMIN` token** to the `Authorization: Bearer <TOKEN>` header.
     - Body (JSON):
@@ -197,16 +193,39 @@ Now, let's use the pre-seeded administrator account to test admin-only features.
         "longitude": -46.656507
       }
       ```
-    - The gym will be created successfully. If you try this same request with the `MEMBER` token from Step 1, you will correctly receive an "Unauthorized" error, demonstrating that the RBAC is working.
+    - The gym will be created successfully. **Save the `id` of the created gym** from the response for the next step.
 
-### Step 3: Refreshing the Access Token
+### Step 3: Testing the Check-in Flow
+
+This flow requires actions from both a `MEMBER` and an `ADMIN`.
+
+1.  **Create a Check-in (as a `MEMBER`):**
+    - Use the **`MEMBER` token** (`John Doe's` token) in the `Authorization` header.
+    - `POST` `http://localhost:3333/gyms/YOUR_GYM_ID/check-ins`
+      - (Replace `YOUR_GYM_ID` with the ID you saved from Step 2).
+    - Body (JSON): This is required to validate the user's distance from the gym. Use coordinates close to the gym's location.
+      ```json
+      {
+        "latitude": -23.563899,
+        "longitude": -46.656599
+      }
+      ```
+    - A new check-in will be created. **Save the `id` of the check-in** from the response.
+
+2.  **Validate the Check-in (as an `ADMIN`):**
+    - Now, switch to the **`ADMIN` token** in the `Authorization` header.
+    - `PATCH` `http://localhost:3333/check-ins/YOUR_CHECK_IN_ID/validate`
+      - (Replace `YOUR_CHECK_IN_ID` with the ID you saved from the previous request).
+    - This request does not need a body.
+    - The check-in will be successfully validated. This demonstrates the RBAC perfectly, as a `MEMBER` cannot perform this action.
+
+### Step 4: Refreshing the Access Token
 
 When your token expires, use the refresh route. Insomnia/Postman handles cookies automatically.
 
 - `PATCH` `http://localhost:3333/token/refresh`
 - This request does not need a body or an `Authorization` header.
 - The response will contain a new, valid `token`.
-
 ---
 
 ## 📜 Available Scripts
