@@ -15,5 +15,7 @@ export async function validate(request: FastifyRequest, reply: FastifyReply) {
     checkInId,
   })
 
-  return reply.status(204).send()
+  return reply.status(200).send({
+    message: 'Check-in validated successfully',
+  })
 }
